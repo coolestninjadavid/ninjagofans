@@ -34,10 +34,21 @@
    <button onclick="checkAnswer('LLOYD')">LLOYD</button>
    <button onclick="checkAnswer('FRAK')">FRAK</button>
    <P id="result"></P>
-
+<div id="question2" style="display: none;">
+    <p>who was the elemental master of smoke in 2025 </p>
+    <button onclick="checkAnswer2('CINDER')">CINDER</button>
+    <button onclick="checkAnswer2('ASH')">ASH</button>
+    <p id="result2"></p>
+</div>
    <script>
     function checkAnswer(choice) {
       document.getElementById('result').textContent = choice === 'LLOYD' ? 'Correct! 🥷🏻' : 'Nope, try again!';
+      if (choice === 'LLOYD') {
+        document.getElementById('question2').style.display = 'block';
+      }
+    }
+    function checkAnswer2(choice) {
+        document.getElementById('result2').textContent = choice === 'CINDER' ? 'CORRECT! 💨' : 'NOPE, TRY AGAIN!';
     }
    </script>
 </body>
