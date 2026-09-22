@@ -4,8 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a, #7f0101);
+            color: white;
+            text-align: center;
+            padding: 40px;
+        }
+        h1 {
+            color: #facc15;
+            text-shadow: 2px 2px #dc2626;
+        }
+        button {
+            background: #dc2626;
+            color: aquamarine;
+            border: rgb(127, 83, 0);
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+        button:hover {
+            background: #facc15;
+            color: firebrick;
+        }
+    </style>
 </head>
 <body>
-   <h1>NINJAGO SUPER QUIZZ</h1> 
+   <h1>NINJAGO SUPER QUIZZ</h1>
+   <p>who is the green ninja?</p>
+   <button onclick="checkAnswer('LLOYD')">LLOYD</button>
+   <button onclick="checkAnswer('FRAK')">FRAK</button>
+   <P id="result"></P>
+
+   <script>
+    function checkAnswer(choice) {
+      document.getElementById('result').textContent = choice === 'LLOYD' ? 'Correct! 🥷🏻' : 'Nope, try again!';
+    }
+   </script>
 </body>
 </html>
