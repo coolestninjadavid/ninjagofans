@@ -40,6 +40,24 @@
     <button onclick="checkAnswer2('ASH')">ASH</button>
     <p id="result2"></p>
 </div>
+<div id="question3" style="display: none;">
+    <p>what is the name of dereth's dojo</p>
+    <button onclick="checkAnswer3('MOJO DOJO')">MOJO DOJO</button>
+    <button onclick="checkAnswer3('BROWN DOJO')">BROWN DOJO</button>
+    <p id="result3"></p>
+</div>
+<div id="question4" style="display: none;">
+    <p>who is nia's and kai's mother</p>
+    <button onclick="checkAnswer4('MAYA')">MAYA</button>
+    <button onclick="checkAnswer4('LILY')">LILY</button>
+    <p id="result4"></p>
+</div>
+<div id="question5" style="display: none;">
+    <p>who is the new character that is related to lord rases tribe</p>
+    <button onclick="checkAnswer5('ZILVER')">ZILVER</button>
+    <button onclick="checkAnswer5('ONI')">ONI</button>
+    <p id="result5"></p>
+</div>
    <script>
     function checkAnswer(choice) {
       document.getElementById('result').textContent = choice === 'LLOYD' ? 'Correct! 🥷🏻' : 'Nope, try again!';
@@ -49,7 +67,33 @@
     }
     function checkAnswer2(choice) {
         document.getElementById('result2').textContent = choice === 'CINDER' ? 'CORRECT! 💨' : 'NOPE, TRY AGAIN!';
+         if (choice === 'CINDER') {
+        document.getElementById('question3').style.display = 'block';
+      }
     }
+    function checkAnswer3(choice) {
+        document.getElementById('result3').textContent = choice === 'MOJO DOJO' ? 'CORRECT! 🟤' : 'NOPE, TRY AGAIN!';
+         if (choice === 'MOJO DOJO') {
+        document.getElementById('question4').style.display = 'block';
+      }
+    }
+     function checkAnswer4(choice) {
+        document.getElementById('result4').textContent = choice === 'MAYA' ? 'CORRECT! 🔥💧' : 'NOPE, TRY AGAIN!';
+         if (choice === 'MAYA') {
+        document.getElementById('question5').style.display = 'block';
+      }
+        
+    }
+     function checkAnswer5(choice) {
+        document.getElementById('result5').textContent = choice === 'ZILVER' ? 'CORRECT! 🐯' : 'NOPE, TRY AGAIN!';
+        
+      }
+        
+    
+    
+    
+
+    
    </script>
 </body>
 </html>
