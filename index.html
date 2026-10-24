@@ -10,8 +10,10 @@
             color: white;
             text-align: center;
             padding: 40px;
+            font-size: 28px;
         }
         h1 {
+            font-size: 3.5rem;
             color: #facc15;
             text-shadow: 2px 2px #dc2626;
         }
@@ -19,81 +21,178 @@
             background: #dc2626;
             color: aquamarine;
             border: rgb(127, 83, 0);
-            padding: 12px 20px;
-            border-radius: 8px;
+            font-size: 1em;
+            padding: 18px 30px;
+            border-radius: 12px;
         }
         button:hover {
             background: #facc15;
             color: firebrick;
         }
+        .quiz-container {
+          position: relative;
+          display: grid;
+          grid-template-columns: minmax(0, 700px);
+          justify-content: center;
+        }
+        .quiz-left {
+          position: relative;
+          z-index: 1;
+        }
+        .quiz-right {
+          position: absolute;
+          top: -80px;
+          right: 0;
+          z-index: 0;
+        }
+        .corner-left {
+          position: fixed;
+          left: 0;
+          bottom: 0;
+          width: 34vw;
+          max-width: 600px;
+          z-index: 0;
+          pointer-events: none;
+        }
+        .quiz-right img {
+          width: 34vw;
+          max-width: 600px;
+          border-radius: 12px
+        }
     </style>
 </head>
 <body>
+   <img class="corner-left" src="draconusjay.png" alt="Dragon Jay flying with ice wings">
    <h1>NINJAGO SUPER QUIZZ</h1>
+   <p id="timer" style="color:#facc15;font-weight:bold;font-size:3rem;margin:10px 0;"></p>
+   <div class="quiz-container">
+    <div class="quiz-left">
+   <div id="question1">
    <p>who is the green ninja?</p>
    <button onclick="checkAnswer('LLOYD')">LLOYD</button>
    <button onclick="checkAnswer('FRAK')">FRAK</button>
    <P id="result"></P>
-<div id="question2" style="display: none;">
-    <p>who was the elemental master of smoke in 2025 </p>
-    <button onclick="checkAnswer2('CINDER')">CINDER</button>
-    <button onclick="checkAnswer2('ASH')">ASH</button>
-    <p id="result2"></p>
-</div>
-<div id="question3" style="display: none;">
-    <p>what is the name of dereth's dojo</p>
-    <button onclick="checkAnswer3('MOJO DOJO')">MOJO DOJO</button>
-    <button onclick="checkAnswer3('BROWN DOJO')">BROWN DOJO</button>
-    <p id="result3"></p>
-</div>
-<div id="question4" style="display: none;">
-    <p>who is nia's and kai's mother</p>
-    <button onclick="checkAnswer4('MAYA')">MAYA</button>
-    <button onclick="checkAnswer4('LILY')">LILY</button>
-    <p id="result4"></p>
-</div>
-<div id="question5" style="display: none;">
-    <p>who is the new character that is related to lord rases tribe</p>
-    <button onclick="checkAnswer5('ZILVER')">ZILVER</button>
-    <button onclick="checkAnswer5('ONI')">ONI</button>
-    <p id="result5"></p>
-</div>
+   </div>
+   <div id="question2" style="display:none;">
+   <p>who was the elemental master of smoke in 2025 ?</p>
+   <button onclick="checkAnswer2('CINDER')">CINDER</button>
+   <button onclick="checkAnswer2('ASH')">ASH</button>
+   <p id="result2"></p>
+   </div>
+    <div id="question3" style="display:none;">
+   <p>what is the name of dereth's dojo ?</p>
+   <button onclick="checkAnswer3('MOJO DOJO')">MOJO DOJO
+   </button>
+   <button onclick="checkAnswer3('BROWN DOJO')">BROWN DOJO</button>
+   <p id="result3"></p>
+   </div>
+   <div id="question4" style="display:none;">
+   <p>who is kai's and nya's mother ?</p>
+   <button onclick="checkAnswer4('MAYA')">MAYA
+   </button>
+   <button onclick="checkAnswer4('LILY')">LILY</button>
+   <p id="result4"></p>
+   </div>
+    <div id="question5" style="display:none;">
+   <p>who is the new character that is related to Lord Ras's tribe ?</p>
+   <button onclick="checkAnswer5('ZILVAR')">ZILVAR
+   </button>
+   <button onclick="checkAnswer5('YOUNG ZERAS')">YOUNG ZERAS</button>
+   <p id="result5"></p>
+   </div>
+   <div id="finalScore" style="display: none;">
+    <h2>Your Score: <span id="scoreText"></span>/5</h2>
+   </div>
+   </div>
+   <div class="quiz-right">
+    <img src="pic.png" alt="LLOYD the legendary green ninja?">
+   </div>
+   </div>
    <script>
+    let score = 0;
+    const TIME_LIMIT = 15;
+    let current = 1, timeLeft = TIME_LIMIT, timerId = null;
+    function updateTimer() {
+      const t = document.getElementById('timer');
+      t.textContent = '⏱ ' + timeLeft + 's';
+      t.style.color = timeLeft <= 5 ? '#ff2a2a' : '#facc15';
+    }
+    function startTimer() {
+      clearInterval(timerId);
+      timeLeft = TIME_LIMIT;
+      updateTimer();
+      timerId = setInterval(function () {
+        timeLeft--;
+        updateTimer();
+        if (timeLeft <= 0) timeUp();
+      }, 1000);
+    }
+    function timeUp() {
+      document.getElementById("question" + current).style.display = "none";
+      if (current < 5) {
+        showQuestion(current + 1);
+        document.getElementById("timer").textContent = "TIME'S UP! ⏰ Next question...";
+        setTimeout(updateTimer, 1000);
+      } else {
+        finishQuiz();
+      }
+    }
+    function showQuestion(n) {
+      current = n;
+      document.getElementById('question' + n).style.display = 'block';
+      startTimer();
+    }
+    function finishQuiz() {
+      clearInterval(timerId);
+      document.getElementById('timer').style.display = 'none';
+      document.getElementById('finalScore').style.display = 'block';
+      document.getElementById('scoreText').textContent = score;
+    }
+    startTimer();
+    function hideQuestion(btn) {
+      btn.closest('div[id^="question"]').style.display = 'none';
+    }
     function checkAnswer(choice) {
       document.getElementById('result').textContent = choice === 'LLOYD' ? 'Correct! 🥷🏻' : 'Nope, try again!';
       if (choice === 'LLOYD') {
-        document.getElementById('question2').style.display = 'block';
+        score = score + 1;
+        hideQuestion(event.target);
+        showQuestion(2);
       }
     }
     function checkAnswer2(choice) {
-        document.getElementById('result2').textContent = choice === 'CINDER' ? 'CORRECT! 💨' : 'NOPE, TRY AGAIN!';
-         if (choice === 'CINDER') {
-        document.getElementById('question3').style.display = 'block';
+      document.getElementById('result2').textContent = choice === 'CINDER' ? 'CORRECT! 💨' : 'NOPE, TRY AGAIN!';
+      if (choice === 'CINDER') {
+        score = score + 1;
+        hideQuestion(event.target);
+        showQuestion(3);
       }
+
     }
     function checkAnswer3(choice) {
-        document.getElementById('result3').textContent = choice === 'MOJO DOJO' ? 'CORRECT! 🟤' : 'NOPE, TRY AGAIN!';
-         if (choice === 'MOJO DOJO') {
-        document.getElementById('question4').style.display = 'block';
+      document.getElementById('result3').textContent = choice === 'MOJO DOJO' ? 'CORRECT! 🟫' : 'NOPE, TRY AGAIN!';
+      if (choice === 'MOJO DOJO') {
+        score = score + 1;
+        hideQuestion(event.target);
+        showQuestion(4);
       }
     }
-     function checkAnswer4(choice) {
-        document.getElementById('result4').textContent = choice === 'MAYA' ? 'CORRECT! 🔥💧' : 'NOPE, TRY AGAIN!';
-         if (choice === 'MAYA') {
-        document.getElementById('question5').style.display = 'block';
+    function checkAnswer4(choice) {
+      document.getElementById('result4').textContent = choice === 'MAYA' ? 'CORRECT! 💧' : 'NO, thats Cole\'s mother.';
+      if (choice === 'MAYA') {
+        score = score + 1;
+        hideQuestion(event.target);
+        showQuestion(5);
       }
-        
     }
-     function checkAnswer5(choice) {
-        document.getElementById('result5').textContent = choice === 'ZILVER' ? 'CORRECT! 🐯' : 'NOPE, TRY AGAIN!';
-        
+    function checkAnswer5(choice) {
+      document.getElementById('result5').textContent = choice === 'ZILVAR' ? 'CORRECT! 🐯🩶' : 'WRONG! THATS LORD RAS\'S NAME.';
+      if (choice === 'ZILVAR') {
+        score = score + 1;
+        hideQuestion(event.target);
       }
-        
-    
-    
-    
-
-    
+      finishQuiz();
+    }
    </script>
 </body>
 </html>
