@@ -164,47 +164,30 @@
     function hideQuestion(btn) {
       btn.closest('div[id^="question"]').style.display = 'none';
     }
-    function checkAnswer(choice) {
-      document.getElementById('result').textContent = choice === 'LLOYD' ? 'Correct! 🥷🏻' : 'Nope, try again!';
-      if (choice === 'LLOYD') {
-        score = score + 1;
-        hideQuestion(event.target);
-        showQuestion(2);
+    const answers = {
+      1: { right: 'LLOYD', yes: 'Correct! 🥷🏻', no: 'Nope!' },
+      2: { right: 'CINDER', yes: 'CORRECT! 💨', no: 'NOPE!' },
+      3: { right: 'MOJO DOJO', yes: 'CORRECT! 🟫', no: 'NOPE!' },
+      4: { right: 'MAYA', yes: 'CORRECT! 💧', no: "NO, thats Cole's mother." },
+      5: { right: 'ZILVAR', yes: 'CORRECT! 🐯🩶', no: "WRONG! THATS LORD RAS'S NAME." }
+    };
+    function answer(n, choice) {
+      const a = answers[n];
+      const ok = choice === a.right;
+      if (ok) score = score + 1;
+      document.getElementById('question' + n).style.display = 'none';
+      if (n < 5) showQuestion(n + 1); else finishQuiz();
+      if (n < 5) {
+        document.getElementById('timer').textContent = ok ? a.yes : a.no;
+        showingMsg = true;
+        setTimeout(function () { showingMsg = false; updateTimer(); }, 1500);
       }
     }
-    function checkAnswer2(choice) {
-      document.getElementById('result2').textContent = choice === 'CINDER' ? 'CORRECT! 💨' : 'NOPE, TRY AGAIN!';
-      if (choice === 'CINDER') {
-        score = score + 1;
-        hideQuestion(event.target);
-        showQuestion(3);
-      }
-
-    }
-    function checkAnswer3(choice) {
-      document.getElementById('result3').textContent = choice === 'MOJO DOJO' ? 'CORRECT! 🟫' : 'NOPE, TRY AGAIN!';
-      if (choice === 'MOJO DOJO') {
-        score = score + 1;
-        hideQuestion(event.target);
-        showQuestion(4);
-      }
-    }
-    function checkAnswer4(choice) {
-      document.getElementById('result4').textContent = choice === 'MAYA' ? 'CORRECT! 💧' : 'NO, thats Cole\'s mother.';
-      if (choice === 'MAYA') {
-        score = score + 1;
-        hideQuestion(event.target);
-        showQuestion(5);
-      }
-    }
-    function checkAnswer5(choice) {
-      document.getElementById('result5').textContent = choice === 'ZILVAR' ? 'CORRECT! 🐯🩶' : 'WRONG! THATS LORD RAS\'S NAME.';
-      if (choice === 'ZILVAR') {
-        score = score + 1;
-        hideQuestion(event.target);
-      }
-      finishQuiz();
-    }
+    function checkAnswer(c) { answer(1, c); }
+    function checkAnswer2(c) { answer(2, c); }
+    function checkAnswer3(c) { answer(3, c); }
+    function checkAnswer4(c) { answer(4, c); }
+    function checkAnswer5(c) { answer(5, c); }
    </script>
 </body>
 </html>
